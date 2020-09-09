@@ -9,11 +9,21 @@ container.setAttribute('class', 'container')
 app.appendChild(logo)
 app.appendChild(container)
 
-    HttpResponse<JsonNode> jsonResponse ; Unirest.post("https://api-v3.igdb.com/games")
-  .header("user-key", 'f226fed8362e32b4bff628113e0172eb')
-  .header("Accept", "application/json")
-  .body("fields name,popularity; sort popularity dec;")
-  .asJson();
+  axios({
+    url: "https://api-v3.igdb.com/games",
+    method: 'POST',
+    headers: {
+        'Accept': 'application/json',
+        'user-key': 'f226fed8362e32b4bff628113e0172eb'
+    },
+    data: "fields name,popularity; sort popularity dec;"
+  })
+    .then(response => {
+        console.log(response.data);
+    })
+    .catch(err => {
+        console.error(err);
+    });
     
 var request = new XMLHttpRequest()
 request.open('GET', 'https://ghibliapi.herokuapp.com/films', true)
